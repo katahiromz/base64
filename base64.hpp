@@ -33,7 +33,7 @@
 */
 
 #ifndef KATAHIROMZ_BASE64_HPP_
-#define KATAHIROMZ_BASE64_HPP_      3   // Version 3
+#define KATAHIROMZ_BASE64_HPP_      4   // Version 4
 
 ////////////////////////////////////////////////////////////////////////////
 // std::string base64_encode(const void *data, size_t size,
@@ -67,11 +67,6 @@
 inline const char *base64_table(void)
 {
     return BASE64_TABLE;
-}
-
-inline const char *base64_newline(void)
-{
-    return BASE64_NEWLINE;
 }
 
 inline unsigned char base64_index(char ch)
@@ -132,7 +127,7 @@ base64_encode(const void *data, size_t size, size_t line_len = 76)
 
     if (line_len)
     {
-        const std::string newline = base64_newline();
+        const std::string newline = BASE64_NEWLINE;
         for (size_t k = line_len;
              k < ret.size();
              k += line_len + newline.size())
