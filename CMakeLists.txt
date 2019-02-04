@@ -6,6 +6,9 @@
 # CMake minimum version
 cmake_minimum_required(VERSION 2.4)
 
+# enable testing
+enable_testing()
+
 # project name and language
 project(base64 CXX)
 
@@ -57,7 +60,10 @@ endif()
 
 ##############################################################################
 
-# executable
+# add executable
 add_executable(base64-test base64-test.cpp)
+
+# add test
+add_test(NAME base64-test COMMAND $<TARGET_FILE:base64-test>)
 
 ##############################################################################
