@@ -33,7 +33,7 @@
 */
 
 #ifndef KATAHIROMZ_BASE64_HPP_
-#define KATAHIROMZ_BASE64_HPP_      2   // Version 2
+#define KATAHIROMZ_BASE64_HPP_      3   // Version 3
 
 ////////////////////////////////////////////////////////////////////////////
 // std::string base64_encode(const void *data, size_t size,
@@ -53,6 +53,10 @@
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 #endif
 
+#ifndef BASE64_NEWLINE
+    #define BASE64_NEWLINE "\n"
+#endif
+
 #ifndef BASE64_PADDING
     #define BASE64_PADDING '='
 #endif
@@ -66,16 +70,7 @@ inline const char *base64_table(void)
 
 inline const char *base64_newline(void)
 {
-    // NOTE: You can change the newline codes for Base64 encoding:
-    #ifdef BASE64_USE_CRLF
-        return "\r\n";
-    #elif defined(BASE64_USE_LF)
-        return "\n";
-    #elif defined(BASE64_USE_CR)
-        return "\r";
-    #else
-        return "\n";
-    #endif
+    return BASE64_NEWLINE;
 }
 
 inline unsigned char base64_index(char ch)
