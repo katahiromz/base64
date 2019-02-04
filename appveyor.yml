@@ -18,3 +18,5 @@ environment:
 test_script:
     - set CTEST_OUTPUT_ON_FAILURE=ON
     - cmake --build build --target test
+matrix:
+    fast_finish: true
