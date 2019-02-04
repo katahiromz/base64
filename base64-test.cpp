@@ -69,10 +69,7 @@ int main(void)
         return -1;
     }
 
-    if (do_test_file("README.txt", "README.txt.enc") &&
-        do_test_file("LICENSE.txt", "LICENSE.txt.enc") &&
-        do_test_file("CMakeLists.txt", "CMakeLists.txt.enc") &&
-        do_test_file("base64.hpp", "base64.hpp.enc") &&
+    if (
 #if defined(_WIN32) || defined(MSDOS)
         do_test_file("base64-test.exe", "base64-test.exe.enc") &&
 #else
