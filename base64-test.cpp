@@ -23,40 +23,48 @@ bool do_test(const std::string& original)
     return false;
 }
 
-int main(void)
+bool do_test_file(const char *inp_file, const char *out_file)
 {
     std::ifstream fin;
-    fin.open("base64.hpp", std::ios::in | std::ios::binary);
+    fin.open(inp_file, std::ios::in | std::ios::binary);
     if (!fin.is_open())
     {
-        std::cout << "fin open error" << std::endl;
-        return -1;
+        std::cout << "fin open error: '" << inp_file << "'" << std::endl;
+        return false;
     }
 
     std::istreambuf_iterator<char> begin(fin), end;
-    std::string str(begin, end);
+    std::string original(begin, end);
     fin.close();
 
-    std::string encoded = base64_encode(str);
+    std::string encoded = base64_encode(original);
     std::string decoded = base64_decode(encoded);
 
     std::ofstream fout;
-    fout.open("encoded.dat", std::ios::out | std::ios::binary);
+    fout.open(out_file, std::ios::out | std::ios::binary);
     if (!fout.is_open())
     {
-        std::cout << "fout open error" << std::endl;
-        return -2;
+        std::cout << "fout open error: '" << out_file << "'" << std::endl;
+        return false;
     }
-
     fout << encoded;
     fout.close();
 
-    if (decoded != str)
-    {
-        std::cout << "mismatch!" << std::endl;
-    }
+    if (original == decoded)
+        return true;
 
-    if (decoded == str &&
+    std::cout << "FAILURE!" << std::endl;
+    std::cout << "  original file: '" << inp_file << "'" << std::endl;
+    std::cout << "  encoded file: '" << out_file << "'" << std::endl;
+    return false;
+}
+
+int main(void)
+{
+    if (do_test_file("README.txt", "README.txt.enc") &&
+        do_test_file("LICENSE.txt", "LICENSE.txt.enc") &&
+        do_test_file("CMakeLists.txt", "CMakeLists.txt.enc") &&
+        do_test_file("base64.hpp", "base64.hpp.enc") &&
         do_test("") &&
         do_test("T") &&
         do_test("TE") &&

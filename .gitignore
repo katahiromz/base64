@@ -30,4 +30,4 @@ ipch
 x64
 *-old
 *.skrold
-encoded.dat
+*.enc
