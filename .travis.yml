@@ -20,4 +20,4 @@ script:
     - cd build
     - env CTEST_OUTPUT_ON_FAILURE=1 cmake ..
     - make -j 2
-    - make test || cat Testing/Temporary/LastTest.log && false
+    - ctest --output-on-failure
