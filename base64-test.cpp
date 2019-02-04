@@ -41,7 +41,7 @@ int main(void)
     std::string decoded = base64_decode(encoded);
 
     std::ofstream fout;
-    fout.open("base64.dat", std::ios::out | std::ios::binary);
+    fout.open("encoded.dat", std::ios::out | std::ios::binary);
     if (!fout.is_open())
     {
         std::cout << "fout open error" << std::endl;
@@ -87,6 +87,16 @@ int main(void)
         do_test("deadbe") &&
         do_test("deadbee") &&
         do_test("deadbeef") &&
+        do_test("D") &&
+        do_test("DE") &&
+        do_test("DEA") &&
+        do_test("DEAD") &&
+        do_test("DEADB") &&
+        do_test("DEADBE") &&
+        do_test("DEADBEE") &&
+        do_test("DEADBEEF") &&
+        do_test("!#$%&") &&
+        do_test("!#$%&()=~'^|?_\"") &&
         do_test("0123456789") &&
         do_test("0123456789" "0123456789") &&
         do_test("0123456789" "0123456789" "0123456789") &&
