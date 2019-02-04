@@ -1,29 +1,69 @@
+image: Visual Studio 2017
+platform: x64
+configuration: Release
 skip_commits:
   files:
     - '*.md'
     - '.gitignore'
-platform:
-    - x86
-    - x64
-image:
-    - Visual Studio 2013
-    - Visual Studio 2015
-    - Visual Studio 2017
-configuration:
-    - Release
-    - Debug
-install:
-    - if "%COMPILER%"=="mingw" set PATH=C:\MinGW\bin;%PATH%
-    - if "%COMPILER%"=="mingw-w64" set PATH=C:\MinGW\bin;%PATH%
-build_script:
-    - set CTEST_OUTPUT_ON_FAILURE=1
-    - mkdir -p build
-    - cd build
-    - cmake -G "%GENERATOR%" -DCMAKE_BUILD_TYPE="%BUILD_TYPE%" ..
-    - if "%COMPILER%"=="msvc" cmake --build . --config "%BUILD_TYPE%"
-    - if not "%COMPILER%"=="msvc" cmake --build .
-    - ctest -V -C "%BUILD_TYPE%"
 matrix:
-    fast_finish: true
+  fast_finish: true
+environment:
+  matrix:
+    - PLATFORM: x64
+      BUILDER: CMake
+      GENERATOR: "Visual Studio 15 2017 Win64"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - PLATFORM: x86
+      BUILDER: CMake
+      GENERATOR: "Visual Studio 15 2017"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - PLATFORM: x64
+      BUILDER: CMake
+      GENERATOR: "NMake Makefiles"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - PLATFORM: x86
+      BUILDER: CMake
+      GENERATOR: "NMake Makefiles"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - PLATFORM: x64
+      BUILDER: CMake
+      GENERATOR: "Visual Studio 14 2015 Win64"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    - PLATFORM: x86
+      BUILDER: CMake
+      GENERATOR: "Visual Studio 14 2015"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    - PLATFORM: x64
+      BUILDER: CMake
+      GENERATOR: "NMake Makefiles"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    - PLATFORM: x86
+      BUILDER: CMake
+      GENERATOR: "NMake Makefiles"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+configuration:
+  - Debug
+  - Release
+
+init:
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" if "%GENERATOR%"=="NMake Makefiles" if "%PLATFORM%"=="x86" call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars32.bat"
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" if "%GENERATOR%"=="NMake Makefiles" if "%PLATFORM%"=="x64" call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2015" if "%GENERATOR%"=="NMake Makefiles" if "%PLATFORM%"=="x86" call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2015" if "%GENERATOR%"=="NMake Makefiles" if "%PLATFORM%"=="x64" call "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2015" if "%GENERATOR%"=="NMake Makefiles" if "%PLATFORM%"=="x64" call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86_amd64
+
+before_build:
+  - if "%BUILDER%"=="CMake" cmake.exe -G "%GENERATOR%" -DCMAKE_BUILD_TYPE=%CONFIGURATION% %APPVEYOR_BUILD_FOLDER%
+  - if "%BUILDER%"=="NMake" .\autogen.bat
+
+build_script:
+  - ps: 'Write-Host "Running $env:BUILDER:" -ForegroundColor Magenta'
+  - if "%BUILDER%"=="CMake" cmake --build . --config %CONFIGURATION%
+  - if "%BUILDER%"=="NMake" nmake /f makefile.vc
+  
+test_script:
+  - if "%BUILDER%"=="CMake" ctest --output-on-failure -C %CONFIGURATION%
+  - if "%BUILDER%"=="NMake" echo *** NMake does NOT build tests ***
+
 on_failure:
     - echo Testing/Temporary/LastTest.log

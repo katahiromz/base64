@@ -156,12 +156,12 @@ int main(void)
         do_test("0123456789" "0123456789" "0123456789" "0123456789"
                 "0123456789" "0123456789" "0123456789" "0123456789", 10))
     {
-        std::cout << "success" << std::endl;
+        std::cout << "success" << std::endl << std::flush;
         return 0;
     }
     else
     {
-        std::cout << "failure" << std::endl;
+        std::cout << "failure" << std::endl << std::flush;
         return -2;
     }
 }

@@ -16,6 +16,10 @@ before_script:
     - cmake --version
     - $CXX --version
 script:
-    - cmake .
+    - mkdir -p build
+    - cd build
+    - env CTEST_OUTPUT_ON_FAILURE=1 cmake ..
     - make -j 2
     - make test
+on_failure:
+    - cat Testing/Temporary/LastTest.log
