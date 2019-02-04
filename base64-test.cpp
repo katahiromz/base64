@@ -1,4 +1,4 @@
-// base64.cpp -- Base64 encoder/decoder test
+// base64-test.cpp -- Base64 encoder/decoder test
 // Copyright (C) 2019 Katayama Hirofumi MZ <katayama.hirofumi.mz@gmail.com>
 ////////////////////////////////////////////////////////////////////////////
 
