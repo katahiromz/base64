@@ -36,4 +36,7 @@ build_script:
   - cmake --build . --config %CONFIGURATION%
 
 test_script:
-  - ctest --output-on-failure -C %CONFIGURATION% || { cat ..\Testing\Temporary\LastTest.log && false }
+  - ctest --output-on-failure -C %CONFIGURATION% || (
+    echo ..\Testing\Temporary\LastTest.log
+    false
+  )
