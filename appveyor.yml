@@ -1,0 +1,20 @@
+skip_commits:
+  files:
+    - '*.bat'
+    - '*.txt'
+    - '*.md'
+    - '.gitignore'
+platform:
+    - x86
+    - x64
+environment:
+  matrix:
+    - CMAKE_GENERATOR: Visual Studio 10 2010
+#    - CMAKE_GENERATOR: Visual Studio 11 2012
+#    - CMAKE_GENERATOR: Visual Studio 12 2013
+#    - CMAKE_GENERATOR: Visual Studio 14 2015
+    - CMAKE_GENERATOR: Visual Studio 15 2017
+    - CMAKE_GENERATOR: 'MSYS Makefiles'
+test_script:
+    - set CTEST_OUTPUT_ON_FAILURE=ON
+    - cmake --build build --target test
