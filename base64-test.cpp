@@ -78,7 +78,7 @@ int main(int argc, char **argv)
     std::string exe = argv[1];
     std::string exe_enc = exe + ".enc";
 
-    if (do_test_file(exe, exe_enc) &&
+    if (do_test_file(exe.c_str(), exe_enc.c_str()) &&
         do_test("") &&
         do_test("T") &&
         do_test("TE") &&
