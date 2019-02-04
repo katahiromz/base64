@@ -1,26 +1,31 @@
+version: {build}
+
 skip_commits:
   files:
-    - '*.bat'
-    - '*.txt'
     - '*.md'
     - '.gitignore'
 platform:
     - x86
     - x64
-environment:
-  matrix:
-    - CMAKE_GENERATOR: Visual Studio 10 2010
-#    - CMAKE_GENERATOR: Visual Studio 11 2012
-#    - CMAKE_GENERATOR: Visual Studio 12 2013
-#    - CMAKE_GENERATOR: Visual Studio 14 2015
-    - CMAKE_GENERATOR: Visual Studio 15 2017
-    - CMAKE_GENERATOR: 'MSYS Makefiles'
+image:
+    - Visual Studio 2013
+    - Visual Studio 2015
+    - Visual Studio 2017
+configuration:
+    - Release
+    - Debug
+install:
+    - if "%COMPILER%"=="mingw" set PATH=C:\MinGW\bin;%PATH%
+    - if "%COMPILER%"=="mingw-w64" set PATH=C:\MinGW\bin;%PATH%
 build_script:
     - set CTEST_OUTPUT_ON_FAILURE=1
     - mkdir -p build
     - cd build
-    - cmake ..
-    - make -j 2
-    - make test
+    - cmake -G "%GENERATOR%" -DCMAKE_BUILD_TYPE="%BUILD_TYPE%" ..
+    - if "%COMPILER%"=="msvc" cmake --build . --config "%BUILD_TYPE%"
+    - if not "%COMPILER%"=="msvc" cmake --build .
+    - ctest -V -C "%BUILD_TYPE%"
 matrix:
     fast_finish: true
+on_failure:
+    - echo Testing/Temporary/LastTest.log
