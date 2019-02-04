@@ -16,7 +16,11 @@ environment:
     - CMAKE_GENERATOR: Visual Studio 15 2017
     - CMAKE_GENERATOR: 'MSYS Makefiles'
 build_script:
-    - set CTEST_OUTPUT_ON_FAILURE=ON
-    - cmake --build build --target test
+    - set CTEST_OUTPUT_ON_FAILURE=1
+    - mkdir -p build
+    - cd build
+    - cmake ..
+    - make -j 2
+    - make test
 matrix:
     fast_finish: true
