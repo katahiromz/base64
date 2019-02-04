@@ -62,8 +62,5 @@ build_script:
   - if "%BUILDER%"=="NMake" nmake /f makefile.vc
   
 test_script:
-  - if "%BUILDER%"=="CMake" ctest --output-on-failure -C %CONFIGURATION%
+  - if "%BUILDER%"=="CMake" ctest --output-on-failure -C %CONFIGURATION% || echo ..\Testing\Temporary\LastTest.log
   - if "%BUILDER%"=="NMake" echo *** NMake does NOT build tests ***
-
-on_failure:
-    - echo Testing/Temporary/LastTest.log
