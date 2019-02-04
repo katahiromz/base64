@@ -97,6 +97,7 @@ int main(void)
         do_test("DEADBEEF") &&
         do_test("!#$%&") &&
         do_test("!#$%&()=~'^|?_\"") &&
+        do_test(std::string("A\0" "A\0", 4)) &&
         do_test("0123456789") &&
         do_test("0123456789" "0123456789") &&
         do_test("0123456789" "0123456789" "0123456789") &&
