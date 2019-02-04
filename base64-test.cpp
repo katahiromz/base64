@@ -61,15 +61,25 @@ bool do_test_file(const char *inp_file, const char *out_file)
     return false;
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
     if (std::strlen(base64_table()) != 64)
     {
-        std::cout << "The length of base64_table() is not 64." << std::endl;
+        std::cout << "ERROR: The length of base64_table() is not 64." << std::endl;
         return -1;
     }
 
-    if (do_test("") &&
+    if (argc != 2)
+    {
+        std::cout << "ERROR: Invalid argument." << std::endl;
+        return -3;
+    }
+
+    std::string exe = argv[1];
+    std::string exe_enc = exe + ".enc";
+
+    if (do_test_file(exe, exe_enc) &&
+        do_test("") &&
         do_test("T") &&
         do_test("TE") &&
         do_test("TES") &&
