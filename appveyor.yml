@@ -1,5 +1,3 @@
-version: {build}
-
 skip_commits:
   files:
     - '*.md'
