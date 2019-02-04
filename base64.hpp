@@ -53,6 +53,7 @@
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 #endif
 
+// NOTE: You can change the newline code:
 #ifndef BASE64_NEWLINE
     #define BASE64_NEWLINE "\n"
 #endif
