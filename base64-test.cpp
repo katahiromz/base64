@@ -65,7 +65,7 @@ int main(void)
         do_test_file("LICENSE.txt", "LICENSE.txt.enc") &&
         do_test_file("CMakeLists.txt", "CMakeLists.txt.enc") &&
         do_test_file("base64.hpp", "base64.hpp.enc") &&
-#ifdef _WIN32
+#if defined(_WIN32) || defined(MSDOS)
         do_test_file("base64-test.exe", "base64-test.exe.enc") &&
 #else
         do_test_file("base64-test", "base64-test.enc") &&
