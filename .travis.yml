@@ -1,3 +1,4 @@
+build: Script
 language: cpp
 compiler:
     - clang++
@@ -9,6 +10,8 @@ addons:
     apt:
         packages:
             - cmake
+matrix:
+    fast_finish: true
 before_script:
     - cmake --version
     - $CXX --version
