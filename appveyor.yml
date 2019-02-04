@@ -1,3 +1,4 @@
+build: Scripts
 skip_commits:
   files:
     - '*.bat'
