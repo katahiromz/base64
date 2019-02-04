@@ -6,6 +6,7 @@
 #include "base64.hpp"
 #include <iostream>
 #include <fstream>
+#include <cstring>
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -62,6 +63,12 @@ bool do_test_file(const char *inp_file, const char *out_file)
 
 int main(void)
 {
+    if (std::strlen(base64_table()) != 64)
+    {
+        std::cout << "The length of base64_table() is not 64." << std::endl;
+        return -1;
+    }
+
     if (do_test_file("README.txt", "README.txt.enc") &&
         do_test_file("LICENSE.txt", "LICENSE.txt.enc") &&
         do_test_file("CMakeLists.txt", "CMakeLists.txt.enc") &&
@@ -150,13 +157,13 @@ int main(void)
                 "0123456789" "0123456789" "0123456789" "0123456789", 10))
     {
         std::cout << "success" << std::endl;
+        return 0;
     }
     else
     {
         std::cout << "failure" << std::endl;
+        return -2;
     }
-
-    return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////
