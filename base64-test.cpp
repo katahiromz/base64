@@ -26,7 +26,7 @@ bool do_test(const std::string& original)
 int main(void)
 {
     std::ifstream fin;
-    fin.open("base64.cpp", std::ios::in | std::ios::binary);
+    fin.open("base64.hpp", std::ios::in | std::ios::binary);
     if (!fin.is_open())
     {
         std::cout << "fin open error" << std::endl;
