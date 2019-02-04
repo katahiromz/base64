@@ -16,6 +16,6 @@ before_script:
     - cmake --version
     - $CXX --version
 script:
-    - cmake
+    - cmake .
     - make -j 2
     - make test

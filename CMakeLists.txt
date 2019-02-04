@@ -64,6 +64,7 @@ endif()
 add_executable(base64-test base64-test.cpp)
 
 # add test
-add_test(NAME base64-test COMMAND $<TARGET_FILE:base64-test>)
+add_test(NAME base64-test COMMAND $<TARGET_FILE:base64-test>
+         WORKING_DIRECTORY ${PROJECT_BINARY_DIR})
 
 ##############################################################################
