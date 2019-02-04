@@ -33,7 +33,7 @@
 */
 
 #ifndef KATAHIROMZ_BASE64_HPP_
-#define KATAHIROMZ_BASE64_HPP_      1   // Version 1
+#define KATAHIROMZ_BASE64_HPP_      2   // Version 2
 
 ////////////////////////////////////////////////////////////////////////////
 // std::string base64_encode(const void *data, size_t size,
@@ -51,6 +51,10 @@
 #ifndef BASE64_TABLE
     #define BASE64_TABLE \
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+#endif
+
+#ifndef BASE64_PADDING
+    #define BASE64_PADDING '='
 #endif
 
 ////////////////////////////////////////////////////////////////////////////
@@ -127,7 +131,7 @@ base64_encode(const void *data, size_t size, size_t line_len = 76)
             ret += table[a4[j]];
 
         while (i++ < 3)
-            ret += '=';
+            ret += BASE64_PADDING;
     }
 
     if (line_len)
