@@ -30,6 +30,7 @@ configuration:
   - Release
 
 before_build:
+  - set CTEST_OUTPUT_ON_FAILURE=1
   - cmake.exe -G "%GENERATOR%" -DCMAKE_BUILD_TYPE=%CONFIGURATION% %APPVEYOR_BUILD_FOLDER%
 
 build_script:
